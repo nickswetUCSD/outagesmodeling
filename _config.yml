@@ -1,0 +1,5 @@
+title: ⚡OUTAGES MODELING⚡
+description: "A CONTINUATION OF PREVIOUS EXPLORATORY DATA ANALYSIS ON A POWER OUTAGES DATASET, INCLUDING PREDICTIVE MODELING. MADE BY NICK SWETLIN AND PALLAVI PRABHU."
+remote_theme: pages-themes/midnight@v0.2.0
+plugins:
+- jekyll-remote-theme # add this line to the plugins list if you already have one
