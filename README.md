@@ -493,6 +493,8 @@ Clearly, our predictions for the number of CUSTOMERS.AFFECTED 🚶 in power outa
 
 ## FAIRNESS ANALYSIS 🔋
 
+We thought that an interesting metric to test for fairness would be across whether or not the climate for a blackout was normal. We noticed that if you added up all of the rows where CLIMATE.CATEGORY 🌤 is either 'Cold' or 'Warm, you get a similarly sized dataframe to where CLIMATE.CATEGORY 🌤 is 'Normal'.
+
 To test and see if our model is fair, or producing similar RMSEs, in assessing blackouts from different climates, we conducted a permutation test. The two groups we compared were normal climates (blackouts where CLIMATE.CATEGORY 🌤 is 'Normal') and extreme climates (blackouts where CLIMATE.CATEGORY 🌤 is either 'Warm' or 'Cold'). The results of this permutation test would determine the validity of the model being used with regards to climate.
 
 > <b> Null Hypothesis: </b> Our model is fair. The RMSE for locations with extreme weather (hot and cold) is the same as the RMSE of locations with normal weather.
