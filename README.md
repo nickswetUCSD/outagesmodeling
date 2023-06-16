@@ -28,6 +28,7 @@ For additional context, read up on our [previous deep dive](https://nickswetucsd
 ¹ Link to data source found [here.](https://engineering.purdue.edu/LASCI/research-data/outages/outagerisks)
 
 <br>
+
 ---
 
 ## FRAMING THE PROBLEM 🔋
@@ -56,6 +57,7 @@ We'll opt for [RandomForestRegressor](https://scikit-learn.org/stable/modules/ge
 Now that our sails are set, we can use the cleaned data from our previous project ***to start tinkering with features and build a baseline model.***
 
 <br>
+
 ---
 
 ## BASELINE MODEL 🔋
@@ -77,7 +79,7 @@ The closest analogue for these factors that we could find in our dataset were th
 
 Here is what this data might look like before adjustment:
 
-{baseline_model_df}
+<table border="1" class="dataframe">\n  <thead>\n    <tr style="text-align: right;">\n      <th></th>\n      <th>CUSTOMERS.AFFECTED</th>\n      <th>OUTAGE.DURATION</th>\n      <th>CLIMATE.CATEGORY</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>0</th>\n      <td>70000.0</td>\n      <td>3060.0</td>\n      <td>normal</td>\n    </tr>\n    <tr>\n      <th>2</th>\n      <td>70000.0</td>\n      <td>3000.0</td>\n      <td>cold</td>\n    </tr>\n    <tr>\n      <th>3</th>\n      <td>68200.0</td>\n      <td>2550.0</td>\n      <td>normal</td>\n    </tr>\n    <tr>\n      <th>4</th>\n      <td>250000.0</td>\n      <td>1740.0</td>\n      <td>warm</td>\n    </tr>\n    <tr>\n      <th>5</th>\n      <td>60000.0</td>\n      <td>1860.0</td>\n      <td>cold</td>\n    </tr>\n  </tbody>\n</table>
 
 
 
@@ -131,6 +133,8 @@ Let's see if our predictions for the number of CUSTOMERS.AFFECTED 🚶 in power 
 
 
 <br>
+
+---
 
 ## FINAL MODEL 🔋
 
@@ -231,6 +235,8 @@ With this in mind, let's see how our model performs.
 . . .
 
 <br>
+
+---
 
 ### RESULTS:
 
