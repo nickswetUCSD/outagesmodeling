@@ -79,6 +79,7 @@ The closest analogue for these factors that we could find in our dataset were th
 
 Here is what this data might look like before adjustment:
 
+<div style="overflow-x:auto;">
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -121,6 +122,7 @@ Here is what this data might look like before adjustment:
     </tr>
   </tbody>
 </table>
+</div>
 
 <br>
 
@@ -133,6 +135,7 @@ We proceed by tweaking these two features so that they are suitable to predict C
 
 Our features are now prepared.
 
+<div style="overflow-x:auto;">
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -175,6 +178,7 @@ Our features are now prepared.
     </tr>
   </tbody>
 </table>
+</div>
 
 <br>
 
@@ -247,6 +251,7 @@ Could be useful because areas with more customers affected somewhat correspond t
 
 Here is what this data might look like before adjustment:
 
+<div style="overflow-x:auto;">
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -307,6 +312,7 @@ Here is what this data might look like before adjustment:
     </tr>
   </tbody>
 </table>
+</div>
 
 <br>
 
@@ -324,6 +330,7 @@ We proceed by tweaking these three new features so that they are also suitable t
 
 Our features are now prepared.
 
+<div style="overflow-x:auto;">
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -420,6 +427,7 @@ Our features are now prepared.
     </tr>
   </tbody>
 </table>
+</div>
 
 <br>
 
