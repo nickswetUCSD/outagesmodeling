@@ -1,4 +1,8 @@
 
+(For additional context, read up on our [previous deep dive](https://nickswetucsd.github.io/poweroutages/) into power outages.)
+
+<br>
+
 ## REINTRODUCTION 🔋
 
 Nobody likes a blackout. They seem to always crop up when it's least convenient, leaving cities high and dry with malfunctioning traffic lights and citizens floundering with a lack of resources for poor laptop battery life.
@@ -16,13 +20,6 @@ Last time, we investigated the ins and outs of over **1500 rows** of U.S. power 
 
 
 **But can we take these conclusions and turn them into something actionable? Perhaps we can!**
-
-
-
-
-For additional context, read up on our [previous deep dive](https://nickswetucsd.github.io/poweroutages/) into power outages.
-
-
 
 
 ¹ Link to data source found [here.](https://engineering.purdue.edu/LASCI/research-data/outages/outagerisks)
@@ -47,7 +44,7 @@ We pose the following prediction problem:
 
 - **PREDICTOR CLASS: RandomForestRegressor**
 > Since our response variable of CUSTOMERS.AFFECTED 🚶 uses *continuous numerical data*, we'll need to use a regressor instead of a classifier. 
-We'll opt for [RandomForestRegressor](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html) from sk.learn, since we are working with a large dataset and we were not necessarily concerned about interpreting how the specific splits were made, like a DescisionTreeRegressor may illustrate. 
+We'll opt for [RandomForestRegressor](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html) from sk.learn, since we are working with a large dataset and we're not necessarily concerned about interpreting how specific splits are made, like how a DescisionTreeRegressor may operate. 
 <br>
 
 - **QUALITY METRIC: RMSE**
@@ -195,12 +192,6 @@ Our features are now prepared.
 
 - THERE ARE 3 TOTAL FEATURES.
 
-<br>
-<br>
-
-*( training baseline_model . . . ⚙️⚙️⚙️ )*
-
-. . .
 
 <br>
 
@@ -324,7 +315,7 @@ We proceed by tweaking these three new features so that they are also suitable t
 
 - OUTAGE.START.TIME 🏁 will be put through a **FunctionTransformer**, which will sort the hour of blackout into buckets of 'Morning', 'Afternoon', or 'Evening' (0-8: Morning, 8-16: Afternoon, 16-24: Evening). These three categories will recieve their own **OHE,** creating *two* (three, and then dropping the first new feature) new features for our model. We will rename these columns to TIME.OF.DAY 🏁.
 
-- POPULATION 👥 will utilize a **StandardScaler,** which takes a distribution and spits out the corresponding z-scores for each , essentially mapping the distribution to a bell-curve. Though we could leave POPULATION 👥 untouched, it is better to standardize the data and dull the effect that extremely large cities and extremely small towns have on our regressor. 
+- POPULATION 👥 will utilize a **StandardScaler,** which takes a distribution and spits out the corresponding z-score for each value, essentially mapping the distribution to a bell-curve. Though we could leave POPULATION 👥 untouched, it is better to standardize the data and dull the effect that extremely large cities and extremely small towns have on our regressor. 
 
 
 
@@ -474,15 +465,7 @@ best_params = {'criterion': 'friedman_mse',
 With this in mind, let's see how our model performs.
 
 <br>
-<br>
 
-
-
-*( training final_model . . . ⚙️⚙️⚙️ )*
-
-. . .
-
-<br>
 
 ### RESULTS:
 
@@ -499,7 +482,7 @@ Testing Improvement: -45811.835930722475
 
 
 
-It's an improvement. The training RMSE is still *significantly* lower than our testing RMSE, which implies that our model might be **overfit** to our current data, but it the overfit is less extreme than in the case of our baseline model. Training error has increased significantly, but what matters much more is how the testing error changed, since we'll be testing our model on *data other than our training data.* Testing error has gone down significantly; the improvement is ~40,000 RMSE! This means that our model is much better at predicting *for other given datasets* than our baseline model is.
+It's an improvement. The training RMSE is still *significantly* lower than our testing RMSE, which implies that our model might be **overfit** to our current data, but the overfit is less extreme than in the case of our baseline model. Training error has increased significantly, but what matters much more is how the testing error has changed, since we'll be testing our model on *data other than our training data.* Testing error has gone down significantly; the improvement is ~40,000 RMSE! This means that our model is much better at predicting *for other given datasets* than our baseline model is.
 
 Clearly, our predictions for the number of CUSTOMERS.AFFECTED 🚶 in power outages has improved with these changes, but there are still limitations to the quality of our model.
 
@@ -529,6 +512,8 @@ We recieved a p-value of ~0.20 for this comparison, which (at a standard α = 0.
 Going back to our original question of:
 > ### Can we reasonably predict the magnitude of a blackout from other blackout features?
 
-... we found that using features like CLIMATE.CATEGORY 🌤, CAUSE.CATEGORY 🌪, TIME.OF.DAY 🏁, POPULATION 👥, and OUTAGE.DURATION ⏱  were mediocre indicators of the magnitude of a blackout (CUSTOMERS.AFFECTED 🚶). Both the training RMSE (~ 220k) and testing RMSE (~ 330k) were fairly high in our final model, yet reasonable improvement was made in testing RMSE from our baseline model (~ 44k). Additionally, this specific instance of our final model proved relatively fair in predicting across climates, passing a permutation test at the 0.05 significance level.
+<br>
+
+... we found that using features like CLIMATE.CATEGORY 🌤, CAUSE.CATEGORY 🌪, TIME.OF.DAY 🏁, POPULATION 👥, and OUTAGE.DURATION ⏱  were mediocre indicators of the magnitude of a blackout (CUSTOMERS.AFFECTED 🚶). Both the training RMSE (~ 220k) and testing RMSE (~ 330k) were fairly high in our final model, yet reasonable improvement was made in testing RMSE from our baseline model (~ 44k). There was not strong enough evidence to suggest that our model was unfair in predicting across climates, passing a permutation test at the 0.05 significance level.
 
 As with all prediction problems, further exploration and assessment is necessary to see where better predictors and undercover patterns may lie in our data.
