@@ -30,7 +30,7 @@ For additional context, read up on our [previous deep dive](https://nickswetucsd
 <br>
 ---
 
-## PROBLEM IDENTIFICATION 🔋
+## FRAMING THE PROBLEM 🔋
 
 
 We pose the following prediction problem:
@@ -45,7 +45,8 @@ We pose the following prediction problem:
 <br>
 
 - **PREDICTOR CLASS: RandomForestRegressor**
-> Since our response variable of CUSTOMERS.AFFECTED 🚶 uses *continuous numerical data*, we'll need to use a regressor instead of a classifier. We'll use [RandomForestRegressor](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html) from sk.learn to generate predictions; RandomForestRegressor uses multiple decision trees and averages their outputs to make predictions, which is great for datasets with multiple features.
+> Since our response variable of CUSTOMERS.AFFECTED 🚶 uses *continuous numerical data*, we'll need to use a regressor instead of a classifier. 
+We'll opt for [RandomForestRegressor](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html) from sk.learn, since we are working with a large dataset and we were not necessarily concerned about interpreting how the specific splits were made, like a DescisionTreeRegressor may illustrate. 
 <br>
 
 - **QUALITY METRIC: RMSE**
@@ -117,7 +118,10 @@ Our features are now prepared.
 
 ### RESULTS:
 
-{baseline model data}
+>```
+BASELINE MODEL___
+Training RMSE: 128375.64574679772
+Testing RMSE: 379425.60552213225
 
 It's not perfect. The training RMSE is *significantly* lower than our testing RMSE, which implies that our model might be **overfit** to our current data. Regardless, both errors are still quite high. 
 
@@ -134,7 +138,7 @@ Let's see if our predictions for the number of CUSTOMERS.AFFECTED 🚶 in power 
 After combing our dataset for a bit longer, we came across a few other variables that had predictive potential. In addition to the features in our basic model, we use feature-engineered versions of:
 
 - **CAUSE.CATEGORY** 🌪:
->"Categories of all the events causing the major power outages." Used in our previous analysis as a measure of power outage severity.  **Measured as a *nominal, categorical variable.***
+>"Categories of all the events causing the major power outages." Used in our previous analysis as a measure of power outage severity. Potential vallues are 'Equipment Failure', 'Fuel Supply Emergency', 'Intentional Attack', 'Islanding', 'Public Appeal', 'Severe Weather', and 'System Operability Disruption'.  **Measured as a *nominal, categorical variable.***
 <br>
 Could be useful because more severe causes (hurricanes) might affect more customers than less severe causes (power grid strain).
 <br>
@@ -148,7 +152,7 @@ Could be useful because certain times of day (afternoon) are warmer and might sp
 
 
 - **POPULATION** 👥️:
->"Population in the U.S. state in a year." Includes customers and non-customers in the count. **Measured as a *continuous, numerical variable.***
+>"Population in the U.S. state in a year." Includes customers and non-customers in the count. **Measured as a *discrete, numerical variable.***
 <br>
 Could be useful because areas with more customers affected somewhat correspond to areas with more citizens in general.
 <br>
@@ -202,9 +206,17 @@ Our features are now prepared.
 
 We decided to stick with RandomForestRegressor as our predictor instead of changing it for our final model. To obtain better hyperparamters and train more effectively, we enlisted the help of [GridSearchCV](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html), which tests our model over splits or "folds" of our data to find better hyperparameters. This can prevent **overfitting.**
 
-Multiple runs of GridSearchCV helped identify that perhaps these were the best hyperparameters for our RandomForestRegressor.
+Multiple runs of GridSearchCV helped identify that perhaps these were the best hyperparameters for our RandomForestRegressor:
 
-{hyperparameters}
+
+
+>```
+best_params = {'criterion': 'friedman_mse',
+               'max_depth': 3,
+               'max_features': 9,
+               'n_estimators': 6,
+              'random_state': 1}
+
 
 
 With this in mind, let's see how our model performs.
@@ -222,9 +234,19 @@ With this in mind, let's see how our model performs.
 
 ### RESULTS:
 
-{final model data}
 
-It's an improvement. The training RMSE is still *significantly* lower than our testing RMSE, which implies that our model might be **overfit** to our current data, but it the overfit is less extreme than in the case of our baseline model. Testing error has gone down significantly; the improvement is ~40,000 RMSE! This means that our model is much better at predicting *for other given datasets* than our baseline model is.
+
+
+>```
+FINAL MODEL___
+Final Training RMSE: 214995.14290443418 
+Final Testing RMSE: 333613.7695914098
+Testing Improvement: -45811.835930722475
+
+
+
+
+It's an improvement. The training RMSE is still *significantly* lower than our testing RMSE, which implies that our model might be **overfit** to our current data, but it the overfit is less extreme than in the case of our baseline model. Training error has increased significantly, but what matters much more is how the testing error changed, since we'll be testing our model on *data other than our training data.* Testing error has gone down significantly; the improvement is ~40,000 RMSE! This means that our model is much better at predicting *for other given datasets* than our baseline model is.
 
 Clearly, our predictions for the number of CUSTOMERS.AFFECTED 🚶 in power outages has improved with these changes, but there are still limitations to the quality of our model.
 
