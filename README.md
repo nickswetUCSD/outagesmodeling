@@ -79,9 +79,50 @@ The closest analogue for these factors that we could find in our dataset were th
 
 Here is what this data might look like before adjustment:
 
-<table border="1" class="dataframe">\n  <thead>\n    <tr style="text-align: right;">\n      <th></th>\n      <th>CUSTOMERS.AFFECTED</th>\n      <th>OUTAGE.DURATION</th>\n      <th>CLIMATE.CATEGORY</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <th>0</th>\n      <td>70000.0</td>\n      <td>3060.0</td>\n      <td>normal</td>\n    </tr>\n    <tr>\n      <th>2</th>\n      <td>70000.0</td>\n      <td>3000.0</td>\n      <td>cold</td>\n    </tr>\n    <tr>\n      <th>3</th>\n      <td>68200.0</td>\n      <td>2550.0</td>\n      <td>normal</td>\n    </tr>\n    <tr>\n      <th>4</th>\n      <td>250000.0</td>\n      <td>1740.0</td>\n      <td>warm</td>\n    </tr>\n    <tr>\n      <th>5</th>\n      <td>60000.0</td>\n      <td>1860.0</td>\n      <td>cold</td>\n    </tr>\n  </tbody>\n</table>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>CUSTOMERS.AFFECTED</th>
+      <th>OUTAGE.DURATION</th>
+      <th>CLIMATE.CATEGORY</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>70000.0</td>
+      <td>3060.0</td>
+      <td>normal</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>70000.0</td>
+      <td>3000.0</td>
+      <td>cold</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>68200.0</td>
+      <td>2550.0</td>
+      <td>normal</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>250000.0</td>
+      <td>1740.0</td>
+      <td>warm</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>60000.0</td>
+      <td>1860.0</td>
+      <td>cold</td>
+    </tr>
+  </tbody>
+</table>
 
-
+<br>
 
 We proceed by tweaking these two features so that they are suitable to predict CUSTOMERS.AFFECTED 🚶. This is done inside of a [**PipeLine object**](https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html) from sk.learn.  
 
@@ -92,7 +133,48 @@ We proceed by tweaking these two features so that they are suitable to predict C
 
 Our features are now prepared.
 
-{baseline_model_df_2}
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>CLIMATE.CATEGORY_normal</th>
+      <th>CLIMATE.CATEGORY_warm</th>
+      <th>OUTAGE.DURATION</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1406.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>5910.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>235.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>13140.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>347.0</td>
+    </tr>
+  </tbody>
+</table>
 
 <br>
 
@@ -120,10 +202,11 @@ Our features are now prepared.
 
 ### RESULTS:
 
->```
+```
 BASELINE MODEL___
 Training RMSE: 128375.64574679772
 Testing RMSE: 379425.60552213225
+```
 
 It's not perfect. The training RMSE is *significantly* lower than our testing RMSE, which implies that our model might be **overfit** to our current data. Regardless, both errors are still quite high. 
 
@@ -135,6 +218,7 @@ Let's see if our predictions for the number of CUSTOMERS.AFFECTED 🚶 in power 
 <br>
 
 ---
+
 
 ## FINAL MODEL 🔋
 
@@ -163,7 +247,68 @@ Could be useful because areas with more customers affected somewhat correspond t
 
 Here is what this data might look like before adjustment:
 
-{final_model_df}
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>CUSTOMERS.AFFECTED</th>
+      <th>OUTAGE.DURATION</th>
+      <th>CLIMATE.CATEGORY</th>
+      <th>CAUSE.CATEGORY</th>
+      <th>OUTAGE.START</th>
+      <th>POPULATION</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>70000.0</td>
+      <td>3060.0</td>
+      <td>normal</td>
+      <td>severe weather</td>
+      <td>2011-07-01 17:00:00</td>
+      <td>5348119.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>70000.0</td>
+      <td>3000.0</td>
+      <td>cold</td>
+      <td>severe weather</td>
+      <td>2010-10-26 20:00:00</td>
+      <td>5310903.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>68200.0</td>
+      <td>2550.0</td>
+      <td>normal</td>
+      <td>severe weather</td>
+      <td>2012-06-19 04:30:00</td>
+      <td>5380443.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>250000.0</td>
+      <td>1740.0</td>
+      <td>warm</td>
+      <td>severe weather</td>
+      <td>2015-07-18 02:00:00</td>
+      <td>5489594.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>60000.0</td>
+      <td>1860.0</td>
+      <td>cold</td>
+      <td>severe weather</td>
+      <td>2010-11-13 15:00:00</td>
+      <td>5310903.0</td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
 
 We proceed by tweaking these three new features so that they are also suitable to predict CUSTOMERS.AFFECTED 🚶. We'll have to do quite a bit of adjustment to make these variables more understandable to our regressor.
 
@@ -179,7 +324,102 @@ We proceed by tweaking these three new features so that they are also suitable t
 
 Our features are now prepared.
 
-{final_model_df_2}
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>TIME.OF.DAY_morning</th>
+      <th>TIME.OF.DAY_evening</th>
+      <th>CLIMATE.CATEGORY_normal</th>
+      <th>CLIMATE.CATEGORY_warm</th>
+      <th>POPULATION</th>
+      <th>CAUSE.CATEGORY_fuel_supply_emergency</th>
+      <th>CAUSE.CATEGORY_intentional_attack</th>
+      <th>CAUSE_CATEGORY_islanding</th>
+      <th>CAUSE.CATEGORY_public_appeal</th>
+      <th>CAUSE.CATEGORY_severe_weather</th>
+      <th>CAUSE.CATEGORY_system_operabillity_disruption</th>
+      <th>OUTAGE.DURATION</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>-0.709441</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>3060.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>-0.712880</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>3000.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>-0.706454</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>2550.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>-0.696369</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1740.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>-0.712880</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1860.0</td>
+    </tr>
+  </tbody>
+</table>
 
 <br>
 
@@ -214,13 +454,13 @@ Multiple runs of GridSearchCV helped identify that perhaps these were the best h
 
 
 
->```
+```
 best_params = {'criterion': 'friedman_mse',
                'max_depth': 3,
                'max_features': 9,
                'n_estimators': 6,
               'random_state': 1}
-
+```
 
 
 With this in mind, let's see how our model performs.
@@ -236,19 +476,18 @@ With this in mind, let's see how our model performs.
 
 <br>
 
----
-
 ### RESULTS:
 
 
+<br>
 
+```
+FINAL MODEL___ 
+Final Training RMSE: 214995.14290443418
 
->```
-FINAL MODEL___
-Final Training RMSE: 214995.14290443418 
 Final Testing RMSE: 333613.7695914098
 Testing Improvement: -45811.835930722475
-
+```
 
 
 
@@ -259,6 +498,7 @@ Clearly, our predictions for the number of CUSTOMERS.AFFECTED 🚶 in power outa
 
 <br>
 
+---
 
 ## FAIRNESS ANALYSIS 🔋
 
